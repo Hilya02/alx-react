@@ -3,6 +3,9 @@
 	font: 18px Helvetica, Arial, sans-serif;
 }
 
+h1 {
+	margin-left: 3rem;
+}
 .App-header {
 	display: flex;
 	flex-direction: row;
@@ -10,7 +13,6 @@
 	color: var(--primary-color);
 	border-bottom: 3px solid var(--primary-color);
 }
-
 
 .App-logo {
 	height: 200px;
