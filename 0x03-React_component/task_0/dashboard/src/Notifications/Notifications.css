@@ -7,10 +7,15 @@
 	padding: 1rem;
 }
 
-[data-priority="default"] {
+.menuItem p {
+	right: 3rem;
+	position: absolute;
+}
+
+[data-notification-type="default"] {
 	color: blue;
 }
 
-[data-priority="urgent"] {
+[data-notification-type="urgent"] {
 	color: red;
 }
