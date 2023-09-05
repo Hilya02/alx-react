@@ -1,19 +1,20 @@
-import { shallow, mount } from '../../config/setupTests';
-import React from 'react';
-import BodySection from './BodySection';
-import BodySectionWithMarginBottom from './BodySectionWithMarginBottom';
+import React from "react";
+import { shallow } from "enzyme";
+import BodySectionWithMarginBottom from "./BodySectionWithMarginBottom";
+import {StyleSheetTestUtils} from 'aphrodite';
 
+StyleSheetTestUtils.suppressStyleInjection();
 
-describe('BodySectionWithMarginBottom', () => {
-	it(`Checks that component correctly renders a <BodySection /> component`, () => {
-		const wrapper = shallow(<BodySectionWithMarginBottom />);
-		expect(wrapper.find(BodySection).exists()).toBe(true);
-	})
-
-	it(`Checks that props are passed correctly to child component`, () => {
-		const wrapper = shallow(<BodySectionWithMarginBottom title="test title"><p>test children</p></BodySectionWithMarginBottom>)
-		expect(wrapper.find(BodySection).props().title).toBe('test title');
-		// p tag is child component in this instance
-		expect(wrapper.find('p').text()).toBe('test children');
-	})
+describe("testing BodySectionWithMarginBottom", () => {
+    let wrapper;
+    beforeEach(() => {
+        wrapper = shallow(
+        <BodySectionWithMarginBottom title="parent test title" />
+        )   
+    })
+    test("testing that shallowing the component should render correctly", () => {
+        const bodySec = wrapper.find('BodySection')
+        expect(bodySec.length).toBe(1)
+        expect(bodySec.html()).toBe('<div class="bodySection"><h2>parent test title</h2></div>')
+    })
 })
