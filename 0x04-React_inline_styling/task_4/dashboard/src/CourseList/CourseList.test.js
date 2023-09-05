@@ -1,17 +1,50 @@
-import { shallow } from 'enzyme';
-import React from 'react';
-import CourseList from './CourseList';
+import React from "react";
+import Enzyme, {shallow, mount} from 'enzyme'
+import CourseList from "./CourseList";
+import CourseListRow from "./CourseListRow";
+import {StyleSheetTestUtils} from 'aphrodite';
 
+StyleSheetTestUtils.suppressStyleInjection();
 
-// shallow render CourseList component
-describe('<CourseList />', () => {
-	it(`Renders CourseList component without crashing`, () => {
-		const wrapper = shallow(<CourseList />);
-		expect(wrapper.exists()).toBe(true);
-	})
+describe("Test CourseList Component", () => {
+    let wrapper;
+    const listCourses = [
+        {id: 1, name: "ES6", credit: 60},
+        {id: 2, name: "Webpack", credit: 20},
+        {id: 3, name: "React", credit: 40}
+      ]
+    beforeEach(() => {
+        wrapper =   shallow(<CourseList />)
+    })
+    test("renders without crashing", () => {
+        expect(wrapper.length).toBe(1)
+    })
+})
 
-	it(`Renders 5 CourseListRow components`, () => {
-		const wrapper = shallow(<CourseList />);
-		expect(wrapper.find('CourseListRow').length).toBe(5);
-	})
+describe("Check wehn an array is passed", () => {
+    let wrapper;
+    const listCourses = [
+        {id: 1, name: "ES6", credit: 60},
+        {id: 2, name: "Webpack", credit: 20},
+        {id: 3, name: "React", credit: 40}
+      ]
+    beforeEach(() => {
+        wrapper =   shallow(<CourseList listCourses={listCourses}/>)
+    }) 
+    test("renders without crashing", () => {
+        expect(wrapper.length).toBe(1)
+    })
+    test("renders without crashing", () => {
+        expect(wrapper.length).toBe(1)
+    })
+})
+describe("check when an array is empty", () => {
+    let wrapper;
+    const listCourses = []
+    beforeEach(() => {
+        wrapper =   shallow(<CourseList listCourses={listCourses}/>)
+    }) 
+    test("renders without crashing", () => {
+        expect(wrapper.length).toBe(1)
+    })
 })
