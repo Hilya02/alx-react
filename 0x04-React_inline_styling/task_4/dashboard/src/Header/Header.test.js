@@ -1,18 +1,19 @@
-import { shallow } from 'enzyme';
 import React from 'react';
+import { shallow, render } from 'enzyme';
 import Header from './Header';
+import {StyleSheetTestUtils} from 'aphrodite';
 
+StyleSheetTestUtils.suppressStyleInjection();
 
-// shallow render header component
-describe('<Header />', () => {
-	it('Tests that Header renders without crashing', () => {
-		const wrapper = shallow(<Header />);
-		expect(wrapper.exists()).toBe(true);
-	})
+describe("Testing Header Component", () => {
+    test('render header without crashing', () => {
+        const wrapper = shallow(<Header />)
+    })
 
-	it('Tests that the component renders <img> and <h1> tags', () => {
-		const wrapper = shallow(<Header />);
-		expect(wrapper.exists('img')).toBe(true);
-		expect(wrapper.exists('h1')).toBe(true);
-	})
-});
+    test('render img and h1', () => {
+        const wrapper = shallow(<Header />)
+        expect(wrapper.find('img').length).toBe(1)
+        expect(wrapper.find('h1').length).toBe(1)
+    })
+    
+})
