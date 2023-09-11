@@ -1,52 +1,64 @@
-import React, { PureComponent }  from 'react'
-import PropTypes from 'prop-types'
-import {StyleSheet, css} from 'aphrodite';
+import React, { PureComponent } from 'react';
+import { StyleSheet, css } from 'aphrodite';
+import PropTypes from 'prop-types';
+
+
+class NotificationItem extends PureComponent {
+  render() {
+    const { type, value, html, markAsRead, id } = this.props;
+    return (
+      <>
+        {value
+          ? <li
+            data-notification-type={type}
+            onClick={() => markAsRead(id)}
+            className={type === 'default' ? css(styles.default) : css(styles.urgent)}
+          >{value}
+          </li>
+          : null
+        }
+        {html
+          ? <li data-urgent className={css(styles.urgent)} dangerouslySetInnerHTML={{ __html: html }} onClick={() => markAsRead(id)}></li>
+          : null
+        }
+      </>
+    );
+  }
+}
+
+NotificationItem.propTypes = {
+  __html: PropTypes.shape({
+    html: PropTypes.string
+  }),
+  type: PropTypes.string,
+  value: PropTypes.string
+  // markAsRead: ,
+  // key: 
+}
+
+NotificationItem.defaultProps = {
+  type: 'default',
+}
 
 const styles = StyleSheet.create({
-  urgent: {
-    color: "red"
-  },
   default: {
-    color: "blue"
-  },
-  small: {
+    color: 'blue',
     '@media (max-width: 900px)': {
-      listStyle: "none",
-      borderBottom: "2px solid black",
-      width:"100%",
-      paddingBottom: "20px",
-      paddingTop: "15px",
+      borderBottom: '1px solid black',
+      listStyle: 'none',
+      fontSize: '20px',
+      padding: '10px 8px',
+    }
+  },
+  urgent: {
+    color: 'red',
+    '@media (max-width: 900px)': {
+      borderBottom: '1px solid black',
+      listStyle: 'none',
+      fontSize: '20px',
+      padding: '10px 8px',
     }
   }
 })
 
-class NotificationItem extends PureComponent {
-  render () {
-    let classname;
-    {this.props.type === "default" ? classname = styles.default : classname = styles.urgent}
-    return (
-      this.props.value ? <li data-notification-type={this.props.type} key={this.props.id} onClick={() => this.props.markAsRead(this.props.id)} className={css([classname, styles.small])}>
-              {this.props.value}
-              </li> : 
-             <li 
-            data-notification-type={this.props.type} 
-            dangerouslySetInnerHTML={this.props.html}
-            key={this.props.id}
-            onClick={() => this.props.markAsRead(this.props.id)} className={css([classname, styles.small])}>
-            </li>
-    )
-  }
-}
-
-NotificationItem.defaultProps = {
-  type: "default"
-}
-
-NotificationItem.propTypes = {
-  html: PropTypes.shape({__html: PropTypes.string}),
-  type: PropTypes.string.isRequired,
-  value: PropTypes.string
-}
-
-
-export default NotificationItem
+export default NotificationItem;
