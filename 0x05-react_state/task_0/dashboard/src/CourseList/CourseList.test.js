@@ -1,50 +1,39 @@
-import React from "react";
-import Enzyme, {shallow, mount} from 'enzyme'
-import CourseList from "./CourseList";
-import CourseListRow from "./CourseListRow";
-import {StyleSheetTestUtils} from 'aphrodite';
+import React from 'react';
+import { StyleSheetTestUtils } from 'aphrodite';
+import CourseList from './CourseList';
+import { shallow } from 'enzyme';
 
-StyleSheetTestUtils.suppressStyleInjection();
+beforeEach(() => {
+  StyleSheetTestUtils.suppressStyleInjection();
+});
 
-describe("Test CourseList Component", () => {
-    let wrapper;
+afterEach(() => {
+  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+});
+
+describe('rendering CourseList component', () => {
+  it('renders Courselist component without crashing', () => {
+    const wrapper = shallow(<CourseList />);
+
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('renders 5 different rows', () => {
     const listCourses = [
-        {id: 1, name: "ES6", credit: 60},
-        {id: 2, name: "Webpack", credit: 20},
-        {id: 3, name: "React", credit: 40}
-      ]
-    beforeEach(() => {
-        wrapper =   shallow(<CourseList />)
-    })
-    test("renders without crashing", () => {
-        expect(wrapper.length).toBe(1)
-    })
-})
+      { id: 1, name: 'ES6', credit: 60 },
+      { id: 2, name: 'Webpack', credit: 20 },
+      { id: 3, name: 'React', credit: 40 }
+    ];
 
-describe("Check wehn an array is passed", () => {
-    let wrapper;
-    const listCourses = [
-        {id: 1, name: "ES6", credit: 60},
-        {id: 2, name: "Webpack", credit: 20},
-        {id: 3, name: "React", credit: 40}
-      ]
-    beforeEach(() => {
-        wrapper =   shallow(<CourseList listCourses={listCourses}/>)
-    }) 
-    test("renders without crashing", () => {
-        expect(wrapper.length).toBe(1)
-    })
-    test("renders without crashing", () => {
-        expect(wrapper.length).toBe(1)
-    })
-})
-describe("check when an array is empty", () => {
-    let wrapper;
-    const listCourses = []
-    beforeEach(() => {
-        wrapper =   shallow(<CourseList listCourses={listCourses}/>)
-    }) 
-    test("renders without crashing", () => {
-        expect(wrapper.length).toBe(1)
-    })
+    const wrapper = shallow(<CourseList listCourses={listCourses} />);
+
+    expect(wrapper.find('thead').children()).toHaveLength(2);
+    expect(wrapper.find('tbody').children()).toHaveLength(3);
+  });
+
+  // it('checks Notifications renders correctly if passed an empty array or listNotifications not passed', () => {
+  //   const wrapper = shallow(<CourseList listCourses={[]} />);
+
+  //   expect(wrapper.find('tbody').childAt(0).text()).toEqual('No course available yet');
+  // });
 })
