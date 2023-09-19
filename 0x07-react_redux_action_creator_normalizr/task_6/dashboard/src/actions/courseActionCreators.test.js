@@ -1,8 +1,5 @@
-// creates action typs
-
 import { selectCourse, unSelectCourse } from './courseActionCreators';
 import { SELECT_COURSE, UNSELECT_COURSE } from './courseActionTypes';
-
 
 describe('actions', () => {
   it('selectCourse', () => {
