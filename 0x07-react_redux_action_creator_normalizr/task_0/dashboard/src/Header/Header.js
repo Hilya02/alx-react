@@ -1,33 +1,58 @@
-import React from 'react';
-import { StyleSheet, css } from 'aphrodite';
-import holberton_logo from '../assets/holberton_logo.jpeg';
+import React, { cloneElement } from "react";
+import { css, StyleSheet } from 'aphrodite';
+import holberton_logo from "../assets/holberton_logo.jpeg";
+import { AppContext } from '../App/AppContext'
 
-const Header = () => {
-  return (
-    <div className={css(styles.header)}>
-      <img src={holberton_logo} className={css(styles.logo)} alt="logo" />
-      <h1 className={css(styles.title)}>School dashboard</h1>
-    </div>
-  );
-}
 
 const styles = StyleSheet.create({
   header: {
-    display: 'flex',
-    alignItems: 'center',
-    fontSize: 'calc(10px + 2vmin)',
-    color: 'white',
+    display: "flex",
+    color: '#e14852',
+    alignItems: "center"
+  },
+  headerLogo: {
+    width: '200px',
+    height: '200px'
+  },
+  span: {
+    fontStyle: 'italic',
+    textDecoration: 'underline black'
+  },
+  welcomeParagraph: {
+    marginLeft: '15px',
+    color: 'black',
+    fontSize: '1.3rem'
+  },
+  welcomeParagraphSmall: {
     '@media (max-width: 900px)': {
-      justifyContent: 'center'
+      fontSize: '1.1rem',
+      marginLeft: '10px'
     }
-  },
-  title: {
-    color: 'red'
-  },
-  logo: {
-    height: '100px',
-    width: '100px'
   }
 })
 
-export default Header;
+export default class Header extends React.Component {
+  
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+
+    const { user, logOut } = this.context
+
+    return (
+      <header className={css(styles.header)}>
+        <img src={holberton_logo} className={css(styles.headerLogo)} alt="Holberton Logo" />
+        <h1>School dashboard</h1>
+        {user.isLoggedIn && (
+          <p id='logoutSection' className={css(styles.welcomeParagraph, styles.welcomeParagraphSmall)}>Welcome <b>{`${user.email} `}</b><span onClick={logOut} className={css(styles.span)}>(logout)</span></p>
+        )}
+
+      </header>
+
+    );
+  }
+}
+
+Header.contextType = AppContext;
